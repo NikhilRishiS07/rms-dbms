@@ -12,4 +12,7 @@ Steps to run:
  1. cd backend && npm i
  2. cd ../frontend && npm i
 4. navigate to db_setup and run the two sql queries (data.sql and setup.sql in MySQL Workbench) to initialize your database.
+5. use "cd backend" in cmd and use "npm start" to start the backend server.
+6. use "cd frontend" in cmd and use "npm run dev" to run frontend (Vite + React).
 4. after inserting values see if values are successfully inserted into the table.
+
