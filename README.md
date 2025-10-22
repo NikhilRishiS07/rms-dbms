@@ -15,4 +15,5 @@ Steps to run:
 5. use "cd backend" in cmd and use "npm start" to start the backend server.
 6. use "cd frontend" in cmd and use "npm run dev" to run frontend (Vite + React).
 4. after inserting values see if values are successfully inserted into the table.
+5. NEW (22-Oct-2025) also install NODEMON into backend, it allows dynamic updation of server without restarting it.
 
