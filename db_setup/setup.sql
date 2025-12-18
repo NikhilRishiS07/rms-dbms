@@ -48,3 +48,32 @@ CREATE TABLE Bookings (
     status ENUM('Booked', 'Cancelled', 'Completed') DEFAULT 'Booked',
     FOREIGN KEY (user_id, resource_id) REFERENCES Used_By(user_id, resource_id) ON DELETE CASCADE
 );
+
+------TRIGGERS AND VIEWS------
+
+use rms;
+CREATE OR REPLACE VIEW ResourcesWithBookings AS
+SELECT 
+    r.resource_id, r.name, r.location, r.capacity, r.status AS base_status,
+    ub.user_id AS used_by_user_id, u.name AS used_by_name, u.email AS used_by_email,
+    b.booking_id, b.start_time, b.end_time
+FROM Resources r
+LEFT JOIN Used_By ub ON r.resource_id = ub.resource_id
+LEFT JOIN Users u ON ub.user_id = u.user_id
+LEFT JOIN Bookings b ON r.resource_id = b.resource_id 
+    AND ub.user_id = b.user_id 
+    AND b.status = 'Booked'
+ORDER BY r.name, u.name;
+
+
+
+CREATE TRIGGER auto_insert_used_by
+BEFORE INSERT ON Bookings
+FOR EACH ROW
+BEGIN
+    INSERT IGNORE INTO Used_By (user_id, resource_id)
+    VALUES (NEW.user_id, NEW.resource_id);
+END $$
+
+
+
